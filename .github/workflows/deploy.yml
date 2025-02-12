@@ -35,15 +35,15 @@ jobs:
                 ssh -i ~/.ssh/hng-devops-task0.pem ${{ vars.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
 
                 # Step 1: Stop and rename the current running container
-                if sudo docker ps --format '{{.Names}}' | grep -qw devops-task-two; then
-                    sudo docker stop devops-task-two
-                    sudo docker rm --force devops-task-two
+                if sudo docker ps --format '{{.Names}}' | grep -qw book_api; then
+                    sudo docker stop book_api
+                    sudo docker rm --force book_api
                 fi
 
                 # Step 2: Pull the latest image
                 sudo docker pull ${{ secrets.DOCKER_USERNAME }}/devops-task-two:latest
 
                 # Step 3: Run the new container
-                sudo docker run -d --name devops-task-two -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/devops-task-two:latest
+                sudo docker run -d --name book_api -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/devops-task-two:latest
 
                 EOF
